@@ -3,12 +3,9 @@
   "version": "1.0.0",
   "description": "The Armoury Framework for FiveM",
   "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Armoury-Software/ArmouryFiveM.git"
+    "url": "git+https://github.com/Armoury-Software/Armoury-FiveM-Framework.git"
   },
   "keywords": [
     "fivem"
@@ -16,7 +13,7 @@
   "author": "Armoury",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Armoury-Software/ArmouryFiveM/issues"
+    "url": "https://github.com/Armoury-Software/Armoury-FiveM-Framework/issues"
   },
-  "homepage": "https://github.com/Armoury-Software/ArmouryFiveM#readme"
+  "homepage": "https://github.com/Armoury-Software/Armoury-FiveM-Framework"
 }
