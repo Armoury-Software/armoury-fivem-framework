@@ -1,8 +1,7 @@
 {
   "name": "@armoury/fivem-framework",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The Armoury Framework for FiveM",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Armoury-Software/Armoury-FiveM-Framework.git"
@@ -15,5 +14,24 @@
   "bugs": {
     "url": "https://github.com/Armoury-Software/Armoury-FiveM-Framework/issues"
   },
-  "homepage": "https://github.com/Armoury-Software/Armoury-FiveM-Framework"
+  "homepage": "https://github.com/Armoury-Software/Armoury-FiveM-Framework",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "files": [
+    "lib/"
+  ],
+  "exports": {
+    ".": "./lib/index.d.ts",
+    "./*": "./lib/*/index.d.ts"
+  },
+  "devDependencies": {
+    "@citizenfx/client": "^2.0.7475-1",
+    "@citizenfx/server": "^2.0.7475-1",
+    "@types/node": "^20.11.19",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
 }
