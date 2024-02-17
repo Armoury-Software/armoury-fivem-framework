@@ -14,7 +14,7 @@
     "build:cjs": "node tools/cleanup cjs && tsc -p config/tsconfig.cjs.json",
     "build:esm": "node tools/cleanup esm && tsc -p config/tsconfig.esm.json",
     "build:umd": "node tools/cleanup umd && webpack --config config/webpack.config.js",
-    "build:types": "node tools/cleanup types && tsc -p config/tsconfig.types.json",
+    "build:types": "node tools/cleanup types && tsc -p config/tsconfig.types.json && node tools/move_ambientdeclaration.js",
     "clean": "node tools/cleanup",
     "package": "npm run build && npm pack",
     "test": "jest --no-cache --runInBand",
@@ -42,13 +42,15 @@
   "bugs": {
     "url": "https://github.com/Armoury-Software/Armoury-FiveM-Framework/issues"
   },
-  "dependencies": {},
   "devDependencies": {
+    "@citizenfx/client": "^2.0.7479-1",
+    "@citizenfx/server": "^2.0.7479-1",
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
     "@types/jest": "^27.0.1",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
+    "copy-webpack-plugin": "^12.0.2",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",

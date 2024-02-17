@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 
 module.exports = {
   mode: 'production',
@@ -6,7 +6,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../dist/umd'),
     filename: 'index.js',
-    library: 'exampleTypescriptPackage',
+    library: 'armouryFiveMFramework',
     libraryTarget: 'umd',
     globalObject: 'this',
   },
