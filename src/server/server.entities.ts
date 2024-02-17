@@ -1,8 +1,6 @@
-import { Cfx } from '..';
 import { EventListener, FiveMController } from '../decorators/armoury.decorators';
 import { ServerBase } from './server.base';
 
-// @ts-ignore
 @FiveMController()
 export class ServerEntities extends ServerBase {
   // Probable performance issue? Maybe calling the export so many times when changing the virtual world is too costly?
@@ -12,7 +10,6 @@ export class ServerEntities extends ServerBase {
     return this._virtualWorldsWithPlayers;
   }
 
-  // @ts-ignore
   @EventListener({ eventName: 'playerEnteredScope' })
   public onPlayerEnteredScope(data: { for: number; player: number }): void {
     Cfx.Server.TriggerClientEvent(`${Cfx.Server.GetCurrentResourceName()}:refresh-virtual-world`, data.for);
@@ -38,11 +35,11 @@ export class ServerEntities extends ServerBase {
       newPlayersInVirtualWorld
     );
 
-    global.exports['authentication'].setPlayerInfo(playerId, 'virtualWorld', virtualWorld);
+    Cfx.exports['authentication'].setPlayerInfo(playerId, 'virtualWorld', virtualWorld);
   }
 
   protected getPlayerVirtualWorld(playerId: number): number {
-    return Math.max(0, Number(global.exports['authentication'].getPlayerInfo(playerId, 'virtualWorld')));
+    return Math.max(0, Number(Cfx.exports['authentication'].getPlayerInfo(playerId, 'virtualWorld')));
   }
 
   public removeClientsideVehicles(): void {

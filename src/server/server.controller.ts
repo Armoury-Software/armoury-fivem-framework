@@ -1,8 +1,6 @@
 import { ServerEntities } from "./server.entities";
 import { EventListener, FiveMController } from "../decorators/armoury.decorators";
-import { Cfx } from "..";
 
-// @ts-ignore
 @FiveMController()
 export class ServerController extends ServerEntities {
   protected translationFile?: { [key: string]: string };
@@ -41,7 +39,6 @@ export class ServerController extends ServerEntities {
     Cfx.Server.TriggerClientEvent('armoury-overlay:update-resource-metadata', playerId, Cfx.Server.GetCurrentResourceName(), key, value);
   }
 
-  // @ts-ignore
   @EventListener()
   public onPlayerClientsidedCacheLoaded(metadataObject: any): void {
     if (metadataObject[Cfx.Server.GetCurrentResourceName()]) {
@@ -49,7 +46,6 @@ export class ServerController extends ServerEntities {
     }
   }
 
-  // @ts-ignore
   @EventListener()
   public onPlayerDisconnect(): void {
     if (this._clientsidedResourceMap.has(Cfx.source)) {
@@ -58,7 +54,6 @@ export class ServerController extends ServerEntities {
   }
 
   protected translate(key: string, params?: { [key: string]: string }): string {
-    // @ts-ignore
     let content: string = this.translationFile![this._translationLanguage][key];
 
     if (params) {

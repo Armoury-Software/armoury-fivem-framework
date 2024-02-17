@@ -1,5 +1,3 @@
-import { Cfx } from "..";
-
 export class ServerBase {
     public constructor() {
         this.assignServerBaseListeners();
@@ -10,7 +8,7 @@ export class ServerBase {
         Cfx.Server.RegisterCommand(
             commandName,
             (source: number, args: any[], _raw: boolean) => {
-                if (Number(global.exports['authentication'].getPlayerInfo(source, 'adminLevel')) < adminLevelRequired) {
+                if (Number(Cfx.exports['authentication'].getPlayerInfo(source, 'adminLevel')) < adminLevelRequired) {
                     // TODO: Add error chat message OR some kind of visual notice here
                     return;
                 }

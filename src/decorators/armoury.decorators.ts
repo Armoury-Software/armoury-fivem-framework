@@ -1,4 +1,3 @@
-import { Cfx } from '..';
 import { DEFAULT_DECORATORS } from './decorators.defaults';
 import { EVENT_DIRECTIONS } from './event.directions';
 
@@ -17,12 +16,10 @@ export function FiveMController(options?: FiveMControllerOptions) {
           eventListeners.get(constr)!.forEach(([func, eventName, direction]: [string, string, EVENT_DIRECTIONS]) => {
             switch (direction) {
               case EVENT_DIRECTIONS.CLIENT_TO_CLIENT: {
-                // @ts-ignore
                 Cfx.Client.on(eventName, super[func].bind(this));
                 break;
               }
               default: {
-                // @ts-ignore
                 Cfx.Server.onNet(eventName, super[func].bind(this));
                 break;
               }
@@ -32,8 +29,7 @@ export function FiveMController(options?: FiveMControllerOptions) {
 
         if (exportRegisterers.has(constr)) {
           exportRegisterers.get(constr)!.forEach((func: string) => {
-            // @ts-ignore
-            exports(func, super[func].bind(this));
+            Cfx.exports(func, super[func].bind(this));
           });
         }
 
@@ -43,12 +39,11 @@ export function FiveMController(options?: FiveMControllerOptions) {
               Cfx.Server.RegisterCommand(
                 `${data?.isKeyBinding ? '+' : ''}` + func.toLowerCase() + (data?.suffix || ''),
                 (source: number, args: any[], _raw: boolean) => {
-                    if (data?.adminLevelRequired && Number(global.exports['authentication'].getPlayerInfo(source, 'adminLevel')) < data?.adminLevelRequired) {
+                    if (data?.adminLevelRequired && Number(Cfx.exports['authentication'].getPlayerInfo(source, 'adminLevel')) < data?.adminLevelRequired) {
                         // TODO: Add error chat message OR some kind of visual notice here
                         return;
                     }
-    
-                    // @ts-ignore
+
                     super[func].call(this, source, args, _raw);
                 },
                 false
@@ -57,7 +52,6 @@ export function FiveMController(options?: FiveMControllerOptions) {
               Cfx.Client.RegisterCommand(
                 `${data?.isKeyBinding ? '+' : ''}` + func.toLowerCase() + (data?.suffix || ''),
                 (source: number, args: any[], _raw: boolean) => {
-                    // @ts-ignore
                     super[func].call(this, args, _raw);
                 },
                 false

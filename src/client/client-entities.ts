@@ -4,10 +4,8 @@ import { ClientBase } from './client.base';
 
 import { Blip, BlipMonitored } from '../models/blip.model';
 import { Marker, MarkerMonitored } from '../models/marker.model';
-import { Cfx } from '..';
 import { Delay } from '../utils/utils';
 
-// @ts-ignore
 @FiveMController()
 export class ClientEntities extends ClientBase {
   private _blips: BlipMonitored[] = [];
@@ -353,7 +351,6 @@ export class ClientEntities extends ClientBase {
     });
   }
 
-  // @ts-ignore
   @EventListener({ eventName: `${Cfx.Client.GetCurrentResourceName()}:refresh-virtual-world` })
   protected onRefreshPlayersInVirtualWorld(): void {
     const activePlayers: number[] = Cfx.Client.GetActivePlayers();

@@ -1,4 +1,3 @@
-import { Cfx } from "..";
 import { isJSON } from "../utils/utils";
 
 export class ClientBase {

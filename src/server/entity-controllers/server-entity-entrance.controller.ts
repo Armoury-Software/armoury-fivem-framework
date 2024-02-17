@@ -1,4 +1,3 @@
-import { Cfx } from '../..';
 import { isPlayerInRangeOfPoint } from '../../utils/utils';
 import { ServerDBDependentController } from '../server-db-dependent.controller'
 

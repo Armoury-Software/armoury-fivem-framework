@@ -3,9 +3,8 @@ import { ActionPoint } from '../models/action-point.model';
 import { Marker } from '../models/marker.model';
 import { Command, EventListener, FiveMController } from '../decorators/armoury.decorators';
 import { Delay, calculateDistance } from '../utils/utils';
-import { Cfx } from '..';
+import { EVENT_DIRECTIONS } from '../decorators';
 
-// @ts-ignore
 @FiveMController()
 export class ClientActionPoints extends ClientEntities {
     private chunkRadius: number = 75;
@@ -126,7 +125,6 @@ export class ClientActionPoints extends ClientEntities {
         }
     }
 
-    // @ts-ignore
     @EventListener({ eventName: 'armoury:thread-triggerer', direction: EVENT_DIRECTIONS.CLIENT_TO_CLIENT })
     protected onThreadTriggered(optimizationType: string): void {
         if (optimizationType === 'chunk-checker') {
@@ -171,7 +169,6 @@ export class ClientActionPoints extends ClientEntities {
         }
     }
 
-    // @ts-ignore
     @Command({ suffix: `_${Cfx.Client.GetCurrentResourceName()}` })
     public debug_ActionPoints(): void {
         let totalActionPoints = 0;

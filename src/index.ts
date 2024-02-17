@@ -1,7 +1,7 @@
-import { CitizenFXClient, CitizenFXServer } from './ambient.declarations';
+/// <reference path = "./ambient.declarations.d.ts" />
 
-export namespace Cfx {
-    export import Client = CitizenFXClient;
-    export import Server = CitizenFXServer;
-    export declare var source: number;
-}
+export * from './client';
+export * from './server';
+export * from './decorators';
+export * from './models';
+export * from './utils';

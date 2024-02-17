@@ -1,7 +1,6 @@
 import EventEmitter from 'events';
 import { ClientController } from './client.controller';
-import { IClientWithUIController } from './interfaces/client-ui.interface'; 
-import { Cfx } from '..';
+import { IClientWithUIController } from './interfaces/client-ui.interface';
 
 export class ClientWithUIController extends ClientController implements IClientWithUIController {
     private uiDisplay: boolean = false;
@@ -72,7 +71,7 @@ export class ClientWithUIController extends ClientController implements IClientW
             callback('ok');
         });
 
-        this.onIncomingUIMessageEvent.on(name, (eventData) => { this.onIncomingUIMessage.call(this, name, eventData); });
+        this.onIncomingUIMessageEvent.on(name, (eventData: any) => { this.onIncomingUIMessage.call(this, name, eventData); });
     }
 
     /** Remember that you NEED to use addUIListener in order to be able to listen for events */

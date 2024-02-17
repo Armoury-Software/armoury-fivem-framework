@@ -1,9 +1,7 @@
 import { EventListener, Export, FiveMController } from '../decorators/armoury.decorators';
 import { ServerController } from "./server.controller";
-import { Cfx } from "..";
 import { isJSON } from '../utils/utils';
 
-// @ts-ignore
 @FiveMController()
 export class ServerDBDependentController<T extends { id: number }> extends ServerController {
   private _entities: T[] = [];
@@ -31,7 +29,6 @@ export class ServerDBDependentController<T extends { id: number }> extends Serve
     }
   }
 
-  // @ts-ignore
   @Export()
   protected getEntities(): T[] {
     return this._entities;
@@ -49,7 +46,7 @@ export class ServerDBDependentController<T extends { id: number }> extends Serve
         }
 
         const id: any =
-          await global.exports['oxmysql'].insert_async(
+          await Cfx.exports['oxmysql'].insert_async(
             `INSERT INTO \`${this.dbTableName}\` (${entityProperties.join(', ')}) VALUES (${Array(entityProperties.length).fill('?').join(', ')})`,
             entityValues
           );
@@ -71,7 +68,7 @@ export class ServerDBDependentController<T extends { id: number }> extends Serve
     return (async () => {
       try {
         const result: any =
-          await global.exports['oxmysql'].query_async(
+          await Cfx.exports['oxmysql'].query_async(
             `DELETE FROM \`${this.dbTableName}\` WHERE id = ?`,
             [entity.id]
           );
@@ -101,7 +98,7 @@ export class ServerDBDependentController<T extends { id: number }> extends Serve
         const concatString: string = ' = ?, ';
 
         const result: number =
-          await global.exports['oxmysql'].update_async(
+          await Cfx.exports['oxmysql'].update_async(
             `UPDATE \`${this.dbTableName}\` SET ${updateKeys.join(concatString).concat(concatString).slice(0, -2)} WHERE id = ?`,
             [...updateValues, entity.id]
           );
@@ -124,7 +121,7 @@ export class ServerDBDependentController<T extends { id: number }> extends Serve
   }
 
   protected async loadDBEntityFor(value: number | string, key: string = 'id', bindTo?: number): Promise<T | T[] | null> {
-    const result: T[] = (await global.exports['oxmysql'].query_async(`SELECT * FROM \`${this.dbTableName}\` WHERE ${key} = ?`, [value])).map(
+    const result: T[] = (await Cfx.exports['oxmysql'].query_async(`SELECT * FROM \`${this.dbTableName}\` WHERE ${key} = ?`, [value])).map(
       (resultItem: any) => {
         Object.keys(resultItem).forEach((property: string) => {
           resultItem[property] = JSON.parse(isJSON(resultItem[property].toString()) ? resultItem[property] : `"${resultItem[property]}"`, function(_k, v) { 
@@ -153,7 +150,7 @@ export class ServerDBDependentController<T extends { id: number }> extends Serve
   }
 
   protected async loadDBEntities(): Promise<T[]> {
-    const result: T[] = (await global.exports['oxmysql'].query_async(`SELECT * FROM \`${this.dbTableName}\``, [])).map(
+    const result: T[] = (await Cfx.exports['oxmysql'].query_async(`SELECT * FROM \`${this.dbTableName}\``, [])).map(
       (resultItem: any) => {
         Object.keys(resultItem).forEach((property: string) => {
           resultItem[property] = JSON.parse(isJSON(resultItem[property].toString()) ? resultItem[property] : `"${resultItem[property]}"`, function(_k, v) { 
@@ -220,7 +217,6 @@ export class ServerDBDependentController<T extends { id: number }> extends Serve
 
   protected onBoundEntityDestroyed(_entity: T, _boundPlayer: number): void { }
 
-  // @ts-ignore
   @EventListener()
   public onPlayerAuthenticate(playerId: number, _player: any): void {
     if (this._entities.length) {
@@ -228,7 +224,6 @@ export class ServerDBDependentController<T extends { id: number }> extends Serve
     }
   }
 
-  // @ts-ignore
   @EventListener()
   public onPlayerDisconnect(): void {
     if (this._playerToEntityBindings.has(Cfx.source)) {
@@ -251,7 +246,7 @@ export class ServerDBDependentController<T extends { id: number }> extends Serve
   }
 
   private async computeTableProperties(): Promise<void> {
-    const result: any[] = await global.exports['oxmysql'].query_async(
+    const result: any[] = await Cfx.exports['oxmysql'].query_async(
       `DESCRIBE ${this.dbTableName}`,
       []
     );
