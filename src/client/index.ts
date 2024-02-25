@@ -1,6 +1,11 @@
 import { ReflectiveInjector } from 'injection-js';
 import { ClientActionPointsService, ClientBlipsService, ClientCheckpointsService, ClientMarkersService, ClientPedsService, ClientSessionService, ClientTicksService, ClientVehiclesService, ClientWaypointsService } from './services';
 
+import { Commands } from '../decorators/command.decorator';
+import { EventListeners } from '../decorators/event-listener.decorator';
+import { Exports } from '../decorators/export.decorator';
+import { KeyBindings } from '../decorators/key-binding.decorator';
+
 export function Client_Init(_class: any) {
     const instance = ReflectiveInjector.resolveAndCreate([
         ClientActionPointsService,
@@ -15,26 +20,11 @@ export function Client_Init(_class: any) {
         _class
     ]).get(_class);
 
-    Commands_Client(instance, _class.prototype);
+    Commands(instance, _class.prototype);
+    EventListeners(instance, _class.prototype);
+    Exports(instance, _class.prototype);
+    KeyBindings(instance, _class.prototype);
     return instance;
-}
-
-function Commands_Client(target: any, _prototype: any) {
-    Reflect.getOwnMetadataKeys(_prototype)
-        .filter((key) => key.startsWith('command_'))
-        .forEach((key: string) => {
-            const data = Reflect.getOwnMetadata(key, _prototype);
-            const commandName = `${data?.isKeyBinding ? '+' : ''}` + key.split('_').slice(-1)[0].toLowerCase() + (data?.suffix || '');
-
-            Cfx.Client.RegisterCommand(
-                commandName,
-                (source: number, args: any[], _raw: boolean) => {
-                    target[commandName].call(target, args, _raw);
-                },
-                false
-            );
-        })
-    ;
 }
 
 export * from './client.base';

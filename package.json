@@ -1,6 +1,6 @@
 {
   "name": "@armoury/fivem-framework",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "The Armoury Framework for FiveM",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
