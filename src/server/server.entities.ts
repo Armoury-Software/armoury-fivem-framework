@@ -1,7 +1,7 @@
-import { EventListener, FiveMController } from '../decorators/armoury.decorators';
+import { Controller, EventListener } from '../decorators';
 import { ServerBase } from './server.base';
 
-@FiveMController()
+@Controller()
 export class ServerEntities extends ServerBase {
   // Probable performance issue? Maybe calling the export so many times when changing the virtual world is too costly?
   private _virtualWorldsWithPlayers: Map<number, number[]> = new Map();

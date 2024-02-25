@@ -1,7 +1,7 @@
+import { Controller, EventListener } from "../decorators";
 import { ServerEntities } from "./server.entities";
-import { EventListener, FiveMController } from "../decorators/armoury.decorators";
 
-@FiveMController()
+@Controller()
 export class ServerController extends ServerEntities {
   protected translationFile?: { [key: string]: string };
   private _translationLanguage: string = 'en';

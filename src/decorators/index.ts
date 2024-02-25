@@ -1,3 +1,5 @@
-export * from './armoury.decorators';
-export * from './decorators.defaults';
-export * from './event.directions';
+export { Command } from './command.decorator';
+export { Controller } from './controller.decorator';
+export { EventListener, EVENT_DIRECTIONS } from './event-listener.decorator';
+export { Export } from './export.decorator';
+export { KeyBinding } from './key-binding.decorator';
