@@ -11,6 +11,7 @@ export interface Marker {
     rotation?: number[];
     textureDict?: string;
     textureName?: string;
+    fadeInDisabled?: boolean;
 }
 
 export interface MarkerMonitored extends Marker {

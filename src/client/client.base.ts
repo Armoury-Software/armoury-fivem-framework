@@ -1,3 +1,4 @@
+// TODO: Remove
 import { isJSON } from "../utils/utils";
 
 export class ClientBase {

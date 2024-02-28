@@ -1,5 +1,5 @@
 import { Injectable } from "injection-js";
-import { Delay } from "../../utils";
+import { Delay } from "../../utils/utils";
 
 @Injectable()
 export class ClientVehiclesService {
