@@ -1,24 +1,25 @@
+import { DecoratorUtils } from "./decorator.utils";
+
 // TODO: adminLevelRequired is not supposed to be here. Move it to @armoury/fivem-gamemode
 export function Command(data?: { adminLevelRequired?: number, suffix?: string }) {
-    return function(target: any, propertyKey: string) {
+    return function (target: any, propertyKey: string) {
         Reflect.defineMetadata(`command_${propertyKey}`, data, target);
     }
 }
 
-export function Commands(target: any, _prototype: any) {
-    Reflect.getOwnMetadataKeys(_prototype)
-        .filter((key) => key.startsWith('command_'))
-        .forEach((key: string) => {
-            const data = Reflect.getOwnMetadata(key, _prototype);
-            const rawCommandName = key.split('_').slice(1).join('_');
+export function Commands(target: any, _prototype: any, providerMappings?: { value: any, provider: any }[]) {
+    DecoratorUtils.map(target, _prototype, providerMappings)
+        .filter((mapping) => mapping.key.startsWith('command_'))
+        .forEach((mapping) => {
+            const rawCommandName = mapping.key.split('_').slice(1).join('_');
             const keybinding = Reflect.getOwnMetadata('keybinding_' + rawCommandName, _prototype);
-            const commandName = `${keybinding ? '+' : ''}` + rawCommandName.toLowerCase() + (data?.suffix || '');
+            const commandName = `${keybinding ? '+' : ''}` + rawCommandName.toLowerCase() + (mapping.value?.suffix || '');
 
             if (!Cfx.Client.IsDuplicityVersion()) {
                 Cfx.Client.RegisterCommand(
                     commandName,
-                    (source: number, args: any[], _raw: boolean) => {
-                        target[rawCommandName].apply(target, args);
+                    (_source: number, args: any[], _raw: boolean) => {
+                        mapping.target[rawCommandName].apply(mapping.target, args);
                     },
                     false
                 );
@@ -27,15 +28,14 @@ export function Commands(target: any, _prototype: any) {
                     commandName,
                     (source: number, args: any[], _raw: boolean) => {
                         // TODO: This conditional is not generic enough. This conditional should actually check a function given through an injection token.
-                        if (data?.adminLevelRequired && Number(Cfx.exports['authentication'].getPlayerInfo(source, 'adminLevel')) < data?.adminLevelRequired) {
+                        if (mapping.value?.adminLevelRequired && Number(Cfx.exports['authentication'].getPlayerInfo(source, 'adminLevel')) < mapping.value?.adminLevelRequired) {
                             // TODO: Add error chat message OR some kind of visual notice here
                             return;
                         }
-                        target[rawCommandName].apply(target, [source, ...args]);
+                        mapping.target[rawCommandName].apply(mapping.target, [source, ...args]);
                     },
                     false
                 );
             }
-        })
-    ;
+        });
 }

@@ -1,32 +1,38 @@
+import { DecoratorUtils } from "./decorator.utils";
+
 export function KeyBinding(data: { command?: string, description: string, defaultMapper: KeyBindingType, key: string }) {
-    return function(target: any, propertyKey: string) {
+    return function (target: any, propertyKey: string) {
         Reflect.defineMetadata(
             `keybinding_${propertyKey}`, {
-                command: data.command,
-                description: data.description,
-                defaultMapper: data.defaultMapper,
-                key: data.key },
+            command: data.command,
+            description: data.description,
+            defaultMapper: data.defaultMapper,
+            key: data.key
+        },
             target
         );
     }
 }
 
-export function KeyBindings(target: any, _prototype: any) {
-    Reflect.getOwnMetadataKeys(_prototype)
-        .filter((key) => key.startsWith('keybinding_'))
-        .forEach((key: string) => {
-            const keybindingName = key.split('_').slice(1).join('_');
-            const data = Reflect.getOwnMetadata(key, _prototype);
-            const command = data.command || keybindingName;
+export function KeyBindings(target: any, _prototype: any, providerMappings?: { value: any, provider: any }[]) {
+    DecoratorUtils.map(target, _prototype, providerMappings)
+        .filter((mapping) => mapping.key.startsWith('keybinding_'))
+        .forEach((mapping) => {
+            const keybindingName = mapping.key.split('_').slice(1).join('_');
+            const command = mapping.value?.command || keybindingName;
 
             if (!command) {
                 console.error(`Could not find any relevant command for key binding ${keybindingName}`);
                 return;
             }
 
-            Cfx.Client.RegisterKeyMapping(`+${command.toLowerCase()}`, data.description, data.defaultMapper, data.key);
-        })
-    ;
+            Cfx.Client.RegisterKeyMapping(
+                `+${command.toLowerCase()}`,
+                mapping.value?.description,
+                mapping.value?.defaultMapper,
+                mapping.value?.key
+            );
+        });
 }
 
 export type KeyBindingType =
@@ -36,4 +42,4 @@ export type KeyBindingType =
     | 'mouse_buttonany' | 'mouse_centeredaxis' | 'mouse_relativeaxis' | 'mouse_scaledaxis'
     | 'mouse_normalized' | 'mouse_wheel' | 'pad_analogbutton' | 'pad_axis' | 'pad_debugbutton'
     | 'pad_digitalbutton' | 'pad_digitalbuttonany' | 'touchpad_absolute_axis' | 'touchpad_centered_axis'
-;
+    ;

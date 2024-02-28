@@ -1,18 +1,21 @@
 import { Inject, Injectable } from 'injection-js';
 import { ClientTicksService } from './client-ticks.service';
 import { ActionPoint } from '../../models';
+import { Command, EventListener } from '../../decorators';
+import { calculateDistance } from '../../utils/utils';
 
+// TODO: Lower chunk radius and make chunk-checker check adjacent chunks as well
 @Injectable()
 export class ClientActionPointsService {
-    private chunkRadius: number = 75;
+    private chunkRadius: number = 80;
     
     private _actionPoints: { [posX: number]: { [posY: number]: ActionPoint[] } } = {};
-    protected get actionPoints() {
+    public get actionPoints() {
         return this._actionPoints;
     }
     
     private _cachedPlayerPosition: [number, number] = [NaN, NaN];
-    protected get cachedPlayerPosition(): [number, number] {
+    public get cachedPlayerPosition(): [number, number] {
         return this._cachedPlayerPosition;
     }
     private _cachedPlayerRoundedPosition: [number, number] = [NaN, NaN];
@@ -91,8 +94,8 @@ export class ClientActionPointsService {
     
         return false;
     }
-    
-    /*@EventListener({ eventName: 'armoury:thread-triggerer', direction: EVENT_DIRECTIONS.CLIENT_TO_CLIENT })
+
+    @EventListener({ eventName: 'armoury:thread-triggerer' })
     protected onThreadTriggered(optimizationType: string): void {
         if (optimizationType === 'chunk-checker') {
             this._cachedPlayerPosition = <[number, number]>Cfx.Client.GetEntityCoords(Cfx.Client.PlayerPedId(), true);
@@ -134,9 +137,9 @@ export class ClientActionPointsService {
                 this._ticksService.remove(`${Cfx.Client.GetCurrentResourceName()}_actionpoints`);
             }
         }
-    }*/
+    }
     
-    /*@Command({ suffix: `_${Cfx.Client.GetCurrentResourceName()}` })
+    @Command({ suffix: `_${Cfx.Client.GetCurrentResourceName()}` })
     public debug_ActionPoints(): void {
         let totalActionPoints = 0;
         const currentAreaActionPoints = this.actionPoints[this.roundToNearest(this._cachedPlayerPosition[0], this.chunkRadius)]?.[this.roundToNearest(this._cachedPlayerPosition[1], this.chunkRadius)]?.length || 0;
@@ -150,7 +153,7 @@ export class ClientActionPointsService {
         });
     
         console.log(`Total action points: ${totalActionPoints}. Action points in this area: ${currentAreaActionPoints}`);
-    }*/
+    }
     
     private roundToNearest(num: number, multiple: number): number {
         return Math.round(num / multiple) * multiple;

@@ -1,5 +1,5 @@
 import { Injectable } from "injection-js";
-import { isJSON } from "../../utils";
+import { isJSON } from "../../utils/utils";
 
 @Injectable()
 export class ClientSessionService {

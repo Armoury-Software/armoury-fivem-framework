@@ -7,3 +7,4 @@ export * from './client-session.service';
 export * from './client-ticks.service';
 export * from './client-vehicles.service';
 export * from './client-waypoints.service';
+export * from './client-ui.service';

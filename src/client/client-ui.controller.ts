@@ -1,3 +1,4 @@
+// TODO: Remove
 import EventEmitter from 'events';
 import { ClientController } from './client.controller';
 import { IClientWithUIController } from './interfaces/client-ui.interface';

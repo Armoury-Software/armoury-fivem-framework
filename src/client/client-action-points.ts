@@ -1,3 +1,4 @@
+// TODO: Remove
 import { ClientEntities } from './client-entities';
 import { ActionPoint } from '../models/action-point.model';
 import { Marker } from '../models/marker.model';

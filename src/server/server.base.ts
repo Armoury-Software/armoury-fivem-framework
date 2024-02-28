@@ -1,3 +1,5 @@
+// TODO: Remove
+
 export class ServerBase {
     public constructor() {
         this.assignServerBaseListeners();

@@ -61,7 +61,7 @@ const numberWithCommas = (x: number) => {
 }
 
 const isJSON = (str: string): boolean => {
-    if ( /^\s*$/.test(str) ) return false;
+    if (/^\s*$/.test(str)) return false;
     str = str.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@');
     str = str.replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']');
     str = str.replace(/(?:^|:|,)(?:\s*\[)+/g, '');
@@ -111,9 +111,9 @@ export const fromThousandsString = (input: string): number => {
         Math.pow(
             1000,
             1 +
-                suffixes
-                    .map((suffix: string) => suffix.toLowerCase())
-                    .indexOf(existingSuffix.toLowerCase())
+            suffixes
+                .map((suffix: string) => suffix.toLowerCase())
+                .indexOf(existingSuffix.toLowerCase())
         )
     );
 }
@@ -121,7 +121,7 @@ export const fromThousandsString = (input: string): number => {
 export const toTitleCase = (str: string) => {
     return str.replace(
         /\w\S*/g,
-        function(txt: string) {
+        function (txt: string) {
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
         }
     );

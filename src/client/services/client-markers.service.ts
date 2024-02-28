@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "injection-js";
 import { Marker, MarkerMonitored } from "../../models";
 import { ClientActionPointsService } from "./client-action-points.service";
-import { Delay } from "../../utils";
+import { Delay } from "../../utils/utils";
 
 @Injectable()
 export class ClientMarkersService {
@@ -32,11 +32,32 @@ export class ClientMarkersService {
                             await Delay(100);
                         }
                     }
-                    
-                    Cfx.Client.DrawMarker(marker.marker, marker.pos[0], marker.pos[1], marker.pos[2], 0.0, 0.0, 0.0, marker.rotation?.[0] || 0.0, marker.rotation?.[1] || 0.0, marker.rotation?.[2] || 0.0, marker.scale, marker.scale, marker.scale, marker.rgba[0], marker.rgba[1], marker.rgba[2], marker.rgba[3], false, true, 2, false, (marker.textureDict || null)!, (marker.textureName || null)!, false);
+
+                    Cfx.Client.DrawMarker(
+                        marker.marker, 
+                        marker.pos[0], marker.pos[1], marker.pos[2], 
+                        0.0, 0.0, 0.0,
+                        marker.rotation?.[0] || 0.0, marker.rotation?.[1] || 0.0, marker.rotation?.[2] || 0.0,
+                        marker.scale, marker.scale, marker.scale,
+                        marker.rgba[0], marker.rgba[1], marker.rgba[2], marker.rgba[3],
+                        false, true, 2, false,
+                        (marker.textureDict || null)!,
+                        (marker.textureName || null)!,
+                        false
+                    );
                     
                     if (marker.underlyingCircle) {
-                        Cfx.Client.DrawMarker(marker.underlyingCircle.marker, marker.pos[0], marker.pos[1], marker.pos[2] - 0.9, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, marker.underlyingCircle.scale, marker.underlyingCircle.scale, marker.underlyingCircle.scale, marker.underlyingCircle.rgba?.[0] || marker.rgba[0], marker.underlyingCircle.rgba?.[1] || marker.rgba[1], marker.underlyingCircle.rgba?.[2] || marker.rgba[2], marker.underlyingCircle.rgba?.[3] || marker.rgba[3], false, true, 2, false, null!, null!, false);
+                        Cfx.Client.DrawMarker(
+                            marker.underlyingCircle.marker,
+                            marker.pos[0], marker.pos[1], marker.pos[2] - 0.9,
+                            0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                            marker.underlyingCircle.scale, marker.underlyingCircle.scale, marker.underlyingCircle.scale,
+                            marker.underlyingCircle.rgba?.[0] || marker.rgba[0],
+                            marker.underlyingCircle.rgba?.[1] || marker.rgba[1],
+                            marker.underlyingCircle.rgba?.[2] || marker.rgba[2],
+                            marker.underlyingCircle.rgba?.[3] || marker.rgba[3],
+                            false, true, 2, false, null!, null!, false
+                        );
                     }
                 }
             }))
