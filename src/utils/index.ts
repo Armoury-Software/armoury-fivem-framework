@@ -1,3 +1,3 @@
-// export * from './client-utils';
-// export * from './utils';
 export * from './string-formatter';
+export * from './location-utils';
+export { Delay } from './utils';

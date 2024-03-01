@@ -1,44 +1,42 @@
-import { ReflectiveInjector } from 'injection-js';
+import { Provider, ReflectiveInjector } from 'injection-js';
+import { ServerEnterableDatabase, ServerResourceDatabase, ServerTranslateService, ServerVirtualWorldsService } from './services';
+import { Decorate } from '../decorators/decorator.utils';
 
-import { ServerVirtualWorldsService, ServerEnterableDatabase, ServerResourceDatabase } from './services';
-
-import { Commands } from '../decorators/command.decorator';
-import { EventListeners } from '../decorators/event-listener.decorator';
-import { Exports } from '../decorators/export.decorator';
-import { KeyBindings } from '../decorators/key-binding.decorator';
-
-const providers = [
+export const SERVER_PROVIDERS = [
     ServerVirtualWorldsService,
     ServerResourceDatabase,
     ServerEnterableDatabase,
+    ServerTranslateService,
 ];
 
-export function Server_Init(_class: any, injector?: ReflectiveInjector) {
+export function Server_Init<
+    T extends { new(...args: any[]): any } & Provider
+>(_class: T, providers: Provider[] = [], injector?: ReflectiveInjector): T {
+    const computedProviders = [
+        ...providers ?? [],
+        ...SERVER_PROVIDERS
+    ];
+    const instance = Server_Injector(_class, computedProviders, injector).get(_class);
+    Decorate(instance, _class.prototype, computedProviders);
+
+    return instance;
+}
+
+export function Server_Injector<
+    T extends { new(...args: any[]): any } & Provider
+>(_class: T, providers: Provider[], injector?: ReflectiveInjector): ReflectiveInjector {
     if (!injector) {
+        console.log('no child injector provided.', providers);
         injector = ReflectiveInjector.resolveAndCreate([
             ...providers,
             _class
         ]);
     } else {
-        injector = injector.resolveAndCreateChild([...providers, _class]);
+        console.log('a child injector was provided.');
+        injector = injector.resolveAndCreateChild([/*...providers, */...SERVER_PROVIDERS, _class]);
     }
 
-    const instance = injector.get(_class);
-
-    const relevantProvidersForClass = Object.values(instance)
-        .map((value: any) => ({
-            provider: providers.find((provider) => value instanceof provider),
-            value
-        }))
-        .filter((value) => !!value.provider)
-    ;
-
-    Commands(instance, _class.prototype, relevantProvidersForClass);
-    EventListeners(instance, _class.prototype, relevantProvidersForClass);
-    Exports(instance, _class.prototype, relevantProvidersForClass);
-    KeyBindings(instance, _class.prototype, relevantProvidersForClass);
-
-    return instance;
+    return injector;
 }
 
 export * from './services';
