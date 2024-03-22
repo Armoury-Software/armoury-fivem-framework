@@ -12,7 +12,6 @@ export const CLIENT_PROVIDERS = [
     ClientPedsService,
     ClientSessionService,
     ClientTicksService,
-    ClientTranslateService,
     ClientVehiclesService,
     ClientUIService,
     ClientWaypointsService,
@@ -20,26 +19,15 @@ export const CLIENT_PROVIDERS = [
 
 export function Client_Init<
     T extends { new(...args: any[]): any } & Provider
->(_class: T, providers: Provider[] = CLIENT_PROVIDERS, injector?: ReflectiveInjector): T {
-    const instance = Client_Injector(_class, providers, injector).get(_class);
-    Decorate(instance, _class.prototype, providers, DecorationType.CLIENT);
+>(_class: T, ...providers: Provider[]): T {
+    const mainInjector = ReflectiveInjector.resolveAndCreate(CLIENT_PROVIDERS);
+    const injector: ReflectiveInjector
+        = ReflectiveInjector.resolveAndCreate([...providers, _class], mainInjector);
+
+    const instance = injector.get(_class);
+    Decorate(instance, _class.prototype, [...CLIENT_PROVIDERS, ...providers], DecorationType.CLIENT);
 
     return instance;
-}
-
-export function Client_Injector<
-    T extends { new(...args: any[]): any } & Provider
->(_class: T, providers: Provider[], injector?: ReflectiveInjector): ReflectiveInjector {
-    if (!injector) {
-        injector = ReflectiveInjector.resolveAndCreate([
-            ...providers,
-            _class
-        ]);
-    } else {
-        injector = injector.resolveAndCreateChild([...providers, _class]);
-    }
-
-    return injector;
 }
 
 export * from './services';

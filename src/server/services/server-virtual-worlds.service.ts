@@ -1,8 +1,13 @@
-import { Injectable } from "injection-js";
+import { Inject, Injectable } from "injection-js";
 import { EventListener } from "../../decorators";
+import { ServerSessionService } from "./session";
 
 @Injectable()
 export class ServerVirtualWorldsService {
+    public constructor(
+        @Inject(ServerSessionService) private readonly _session: ServerSessionService,
+    ) { }
+
     // Probable performance issue? Maybe calling the export so many times when changing the virtual world is too costly?
     private _virtualWorldsWithPlayers: Map<number, number[]> = new Map();
     /** This only counts virtual worlds related to the resource! If another resource changes the virtual world of the player, this resource won't know it! */
@@ -35,11 +40,11 @@ export class ServerVirtualWorldsService {
             newPlayersInVirtualWorld
         );
 
-        Cfx.exports['authentication'].setPlayerInfo(playerId, 'virtualWorld', virtualWorld);
+        this._session.setPlayerInfo(playerId, 'virtualWorld', virtualWorld);
     }
 
     public getPlayerVirtualWorld(playerId: number): number {
-        return Math.max(0, Number(Cfx.exports['authentication'].getPlayerInfo(playerId, 'virtualWorld')));
+        return Math.max(0, this._session.getPlayerInfo(playerId, 'virtualWorld'));
     }
 
     public removeClientsideVehicles(): void {

@@ -2,8 +2,8 @@
 import { COLOR_MAPPINGS } from './constants/color.mappings';
 import { ClientBase } from './client.base';
 
-import { Blip, BlipMonitored } from '../models/blip.model';
-import { Marker, MarkerMonitored } from '../models/marker.model';
+import { Blip, BlipMonitored } from './models/blip.model';
+import { Marker, MarkerMonitored } from './models/marker.model';
 import { Delay } from '../utils/utils';
 import { Controller, EventListener } from '../decorators';
 

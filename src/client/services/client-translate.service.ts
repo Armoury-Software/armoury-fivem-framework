@@ -9,7 +9,7 @@ export class ClientTranslateService {
             this._language = <string> this._session.getPlayerInfo('language');
         }
 
-        return this._language;
+        return this._language || 'en';
     }
 
     public constructor(

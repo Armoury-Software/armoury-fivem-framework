@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "injection-js";
-import { Marker, MarkerMonitored } from "../../models";
+import { Marker, MarkerMonitored } from "../models";
 import { ClientActionPointsService } from "./client-action-points.service";
 import { Delay } from "../../utils/utils";
 

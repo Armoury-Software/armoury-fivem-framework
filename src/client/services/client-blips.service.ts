@@ -1,5 +1,5 @@
 import { Injectable } from "injection-js";
-import { Blip, BlipMonitored } from "../../models";
+import { Blip, BlipMonitored } from "../models";
 
 @Injectable()
 export class ClientBlipsService {
