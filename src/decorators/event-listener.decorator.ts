@@ -6,17 +6,17 @@ export function EventListener(data?: { eventName?: string, direction?: EVENT_DIR
         const direction: EVENT_DIRECTIONS = data?.direction || EVENT_DIRECTIONS.CLIENT_TO_SERVER;
         const type: 'ui' | 'default' = data?.type || 'default';
 
-        Reflect.defineMetadata(`eventListener_${propertyKey}`, { eventName, direction, type }, target);
+        Reflect.defineMetadata(`arm_eventListener_${propertyKey}`, { eventName, direction, type }, target);
     };
 }
 
-export function EventListeners(target: any, _prototype: any, providerMappings?: { value: any, provider: any }[]) {
-    DecoratorUtils.map(target, _prototype, providerMappings)
-        .filter((mapping) => mapping.key.startsWith('eventListener_'))
+export function EventListeners(target: any, _prototype: any, providers?: Object[]) {
+    DecoratorUtils.map(target, _prototype, providers ?? [])
+        .filter((mapping) => mapping.key.startsWith('arm_eventListener_'))
         .forEach((mapping) => {
             const { eventName, direction, type }: { eventName: string, direction: EVENT_DIRECTIONS, type: 'ui' | 'default' }
                 = mapping.value;
-            const func = mapping.key.split('_').slice(1).join('_');
+            const func = mapping.key.split('_').slice(2).join('_');
 
             if (type === 'ui') {
                 Cfx.Client.RegisterNuiCallbackType(eventName);
@@ -52,6 +52,7 @@ export const DEFAULT_EVENTS: { [key: string]: string } = {
     onPlayerConnect: 'playerJoining',
     onPlayerDeath: 'armoury:onPlayerDeath',
     onPlayerAuthenticate: 'authentication:player-authenticated',
+    onPlayerLogout: 'armoury:player-logout',
     onPlayerDisconnect: 'playerDropped',
     onResourceStop: 'onResourceStop',
     onContextMenuItemPressed: 'armoury-overlay:context-menu-item-pressed',

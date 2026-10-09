@@ -1,6 +1,6 @@
 import { Inject, Injectable } from 'injection-js';
 import { ClientTicksService } from './client-ticks.service';
-import { ActionPoint } from '../../models';
+import { ActionPoint } from '../models';
 import { Command, EventListener } from '../../decorators';
 import { calculateDistance } from '../../utils/utils';
 

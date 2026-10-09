@@ -3,15 +3,15 @@ import { DecoratorUtils } from "./decorator.utils";
 // TODO: adminLevelRequired is not supposed to be here. Move it to @armoury/fivem-gamemode
 export function Command(data?: { adminLevelRequired?: number, suffix?: string }) {
     return function (target: any, propertyKey: string) {
-        Reflect.defineMetadata(`command_${propertyKey}`, data, target);
+        Reflect.defineMetadata(`arm_command_${propertyKey}`, data, target);
     }
 }
 
-export function Commands(target: any, _prototype: any, providerMappings?: { value: any, provider: any }[]) {
-    DecoratorUtils.map(target, _prototype, providerMappings)
-        .filter((mapping) => mapping.key.startsWith('command_'))
+export function Commands(target: any, _prototype: any, providers?: Object[]) {
+    DecoratorUtils.map(target, _prototype, providers ?? [])
+        .filter((mapping) => mapping.key.startsWith('arm_command_'))
         .forEach((mapping) => {
-            const rawCommandName = mapping.key.split('_').slice(1).join('_');
+            const rawCommandName = mapping.key.split('_').slice(2).join('_');
             const keybinding = Reflect.getOwnMetadata('keybinding_' + rawCommandName, _prototype);
             const commandName = `${keybinding ? '+' : ''}` + rawCommandName.toLowerCase() + (mapping.value?.suffix || '');
 

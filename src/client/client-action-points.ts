@@ -1,7 +1,7 @@
 // TODO: Remove
 import { ClientEntities } from './client-entities';
-import { ActionPoint } from '../models/action-point.model';
-import { Marker } from '../models/marker.model';
+import { ActionPoint } from './models/action-point.model';
+import { Marker } from './models/marker.model';
 import { Delay, calculateDistance } from '../utils/utils';
 import { Command, Controller, EventListener } from '../decorators';
 import { EVENT_DIRECTIONS } from '../decorators/event-listener.decorator';

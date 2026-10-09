@@ -3,7 +3,7 @@ import { DecoratorUtils } from "./decorator.utils";
 export function KeyBinding(data: { command?: string, description: string, defaultMapper: KeyBindingType, key: string }) {
     return function (target: any, propertyKey: string) {
         Reflect.defineMetadata(
-            `keybinding_${propertyKey}`, {
+            `arm_keybinding_${propertyKey}`, {
             command: data.command,
             description: data.description,
             defaultMapper: data.defaultMapper,
@@ -14,11 +14,11 @@ export function KeyBinding(data: { command?: string, description: string, defaul
     }
 }
 
-export function KeyBindings(target: any, _prototype: any, providerMappings?: { value: any, provider: any }[]) {
-    DecoratorUtils.map(target, _prototype, providerMappings)
-        .filter((mapping) => mapping.key.startsWith('keybinding_'))
+export function KeyBindings(target: any, _prototype: any, providers?: Object[]) {
+    DecoratorUtils.map(target, _prototype, providers ?? [])
+        .filter((mapping) => mapping.key.startsWith('arm_keybinding_'))
         .forEach((mapping) => {
-            const keybindingName = mapping.key.split('_').slice(1).join('_');
+            const keybindingName = mapping.key.split('_').slice(2).join('_');
             const command = mapping.value?.command || keybindingName;
 
             if (!command) {
