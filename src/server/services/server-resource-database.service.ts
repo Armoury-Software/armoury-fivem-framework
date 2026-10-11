@@ -1,7 +1,6 @@
 import { Inject, Injectable, Optional } from "injection-js";
 import { Observable, Subject } from "rxjs";
-import { EventListener, Export } from "../../decorators";
-import { isJSON } from "../../utils/utils";
+import { EventListener, Export, isJSON } from '@armoury/fivem-framework-common';
 
 @Injectable()
 export class ServerResourceDatabase<T extends { id: number }> {

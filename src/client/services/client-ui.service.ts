@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "injection-js";
 import { ClientTicksService } from "./client-ticks.service";
 import { Observable, Subject } from "rxjs";
-import { EventListener, UIListener } from "../../decorators";
+import { EventListener, UIListener } from '@armoury/fivem-framework-common';
 
 @Injectable()
 export class ClientUIService {

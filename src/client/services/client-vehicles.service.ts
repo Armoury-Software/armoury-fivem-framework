@@ -1,5 +1,5 @@
 import { Injectable } from "injection-js";
-import { Delay } from "../../utils/utils";
+import { Delay } from '@armoury/fivem-framework-common';
 
 @Injectable()
 export class ClientVehiclesService {

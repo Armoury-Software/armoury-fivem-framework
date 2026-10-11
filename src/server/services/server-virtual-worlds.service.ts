@@ -1,6 +1,7 @@
-import { Inject, Injectable } from "injection-js";
-import { EventListener } from "../../decorators";
-import { ServerSessionService } from "./session";
+import { Inject, Injectable } from 'injection-js';
+import { EventListener } from '@armoury/fivem-framework-common';
+
+import { ServerSessionService } from './session/server-session.service';
 
 @Injectable()
 export class ServerVirtualWorldsService {
@@ -21,7 +22,7 @@ export class ServerVirtualWorldsService {
     }
 
     public setPlayerVirtualWorld(playerId: number, virtualWorld: number): void {
-        const currentPlayerVirtualWorld: number = this.getPlayerVirtualWorld(playerId);
+        /*const currentPlayerVirtualWorld: number = this.getPlayerVirtualWorld(playerId);
 
         if (!isNaN(currentPlayerVirtualWorld)) {
             this._virtualWorldsWithPlayers.set(
@@ -40,11 +41,12 @@ export class ServerVirtualWorldsService {
             newPlayersInVirtualWorld
         );
 
-        this._session.setPlayerInfo(playerId, 'virtualWorld', virtualWorld);
+        this._session.setPlayerInfo(playerId, 'virtualWorld', virtualWorld);*/
     }
 
     public getPlayerVirtualWorld(playerId: number): number {
-        return Math.max(0, this._session.getPlayerInfo(playerId, 'virtualWorld'));
+        return 0;
+        // return Math.max(0, this._session.getPlayerInfo(playerId, 'virtualWorld'));
     }
 
     public removeClientsideVehicles(): void {

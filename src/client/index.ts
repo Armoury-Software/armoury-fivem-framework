@@ -1,7 +1,10 @@
-import { Provider, ReflectiveInjector } from 'injection-js';
+/// <reference path = "../ambient.declarations.d.ts" />
+
+import 'reflect-metadata';
+import { Provider } from 'injection-js';
 import { ClientActionPointsService, ClientBlipsService, ClientCheckpointsService, ClientMarkersService, ClientPedsService, ClientSessionService, ClientTicksService, ClientUIService, ClientVehiclesService, ClientWaypointsService, ClientTranslateService, ClientHudService } from './services';
 
-import { Decorate, DecorationType } from '../decorators/decorator.utils';
+import { BootstrapOptions, bootstrapWithProviders, DecorationType } from '@armoury/fivem-framework-common';
 
 export const CLIENT_PROVIDERS = [
     ClientActionPointsService,
@@ -17,17 +20,18 @@ export const CLIENT_PROVIDERS = [
     ClientWaypointsService,
 ];
 
-export function Client_Init<
+export async function bootstrap<
     T extends { new(...args: any[]): any } & Provider
->(_class: T, ...providers: Provider[]): T {
-    const mainInjector = ReflectiveInjector.resolveAndCreate(CLIENT_PROVIDERS);
-    const injector: ReflectiveInjector
-        = ReflectiveInjector.resolveAndCreate([...providers, _class], mainInjector);
-
-    const instance = injector.get(_class);
-    Decorate(instance, _class.prototype, [...CLIENT_PROVIDERS, ...providers], DecorationType.CLIENT);
-
-    return instance;
+>(_class: T, options: BootstrapOptions = {}): Promise<InstanceType<T>> {
+    return bootstrapWithProviders(
+        _class,
+        CLIENT_PROVIDERS,
+        options,
+        DecorationType.CLIENT,
+        (key, index) => Cfx.Client.GetResourceMetadata(Cfx.Client.GetCurrentResourceName(), key, index),
+		(resourceName) => Cfx.exports[resourceName],
+    );
 }
 
 export * from './services';
+export * from '@armoury/fivem-framework-common';

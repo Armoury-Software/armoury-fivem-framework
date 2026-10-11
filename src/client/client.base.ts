@@ -1,5 +1,5 @@
 // TODO: Remove
-import { isJSON } from "../utils/utils";
+import { isJSON } from '@armoury/fivem-framework-common';
 
 export class ClientBase {
     private tickInstance: number | null = null;

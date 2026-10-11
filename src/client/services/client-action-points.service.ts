@@ -1,8 +1,7 @@
 import { Inject, Injectable } from 'injection-js';
 import { ClientTicksService } from './client-ticks.service';
 import { ActionPoint } from '../models';
-import { Command, EventListener } from '../../decorators';
-import { calculateDistance } from '../../utils/utils';
+import { Command, EventListener, calculateDistance } from '@armoury/fivem-framework-common';
 
 // TODO: Lower chunk radius and make chunk-checker check adjacent chunks as well
 @Injectable()

@@ -1,0 +1,32 @@
+{
+  "name": "@armoury/fivem-framework-common",
+  "version": "1.0.18",
+  "description": "Shared APIs for the Armoury FiveM framework",
+  "main": "dist/cjs/common/index.js",
+  "module": "dist/esm/common/index.js",
+  "types": "dist/types/common/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/common/index.d.ts",
+      "import": "./dist/esm/common/index.js",
+      "require": "./dist/cjs/common/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run build:cjs && npm run build:esm && npm run build:types",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:types": "tsc -p tsconfig.types.json"
+  },
+  "dependencies": {
+    "injection-js": "^2.4.0",
+    "luaparse": "^0.3.1",
+    "reflect-metadata": "^0.2.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

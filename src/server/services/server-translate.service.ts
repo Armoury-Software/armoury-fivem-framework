@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "injection-js";
-import { EventListener } from "../../decorators";
+import { EventListener } from '@armoury/fivem-framework-common';
 
 @Injectable()
 export class ServerTranslateService {

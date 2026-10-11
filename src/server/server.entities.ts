@@ -1,5 +1,5 @@
 // TODO: Remove
-import { Controller, EventListener } from '../decorators';
+import { Controller, EventListener } from '@armoury/fivem-framework-common';
 import { ServerBase } from './server.base';
 
 @Controller()

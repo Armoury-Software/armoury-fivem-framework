@@ -10,13 +10,7 @@ for (const devDependency of Object.keys(devDependencies)) {
   externals[devDependency] = `commonjs ${devDependency}`;
 }
 
-// And anything MikroORM's packaging can be ignored if it's not on disk.
-// Later we check these dynamically and tell webpack to ignore the ones we don't have.
-const optionalModules = new Set([
-  ...Object.keys(require(path.resolve(__dirname, '../node_modules', 'knex/package.json')).browser),
-  // ...Object.keys(require(path.resolve(__dirname, '../node_modules', '@mikro-orm/core/package.json')).peerDependencies),
-  // ...Object.keys(require(path.resolve(__dirname, '../node_modules', '@mikro-orm/core/package.json')).devDependencies || {})
-]);
+const optionalModules = new Set([]);
 
 module.exports = {
   mode: 'production',

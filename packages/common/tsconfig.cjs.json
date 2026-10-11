@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "rootDir": "../../src",
+    "outDir": "dist/cjs"
+  },
+  "include": [
+    "../../src/common/index.ts",
+    "../../src/shared/**/*.ts",
+    "../../src/decorators/**/*.ts",
+    "../../src/utils/**/*.ts"
+  ],
+  "exclude": ["../../src/utils/client-utils.ts"]
+}

@@ -1,5 +1,5 @@
 // TODO: Remove
-import { isPlayerInRangeOfPoint } from '../../utils/utils';
+import { isPlayerInRangeOfPoint } from '@armoury/fivem-framework-common';
 import { ServerDBDependentController } from '../server-db-dependent.controller'
 
 export class ServerEntityWithEntranceController<T extends { id: number, entranceX: number, entranceY: number, entranceZ: number, exitX: number, exitY: number, exitZ: number }> extends ServerDBDependentController<T> {

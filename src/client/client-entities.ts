@@ -4,8 +4,7 @@ import { ClientBase } from './client.base';
 
 import { Blip, BlipMonitored } from './models/blip.model';
 import { Marker, MarkerMonitored } from './models/marker.model';
-import { Delay } from '../utils/utils';
-import { Controller, EventListener } from '../decorators';
+import { Delay, Controller, EventListener } from '@armoury/fivem-framework-common';
 
 @Controller()
 export class ClientEntities extends ClientBase {

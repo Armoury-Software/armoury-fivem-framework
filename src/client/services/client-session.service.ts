@@ -1,5 +1,5 @@
 import { Injectable } from "injection-js";
-import { isJSON } from "../../utils/utils";
+import { isJSON } from '@armoury/fivem-framework-common';
 
 @Injectable()
 export class ClientSessionService {

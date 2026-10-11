@@ -1,0 +1,40 @@
+{
+  "name": "@armoury/fivem-framework-server",
+  "version": "1.0.18",
+  "description": "Server APIs for the Armoury FiveM framework",
+  "main": "dist/cjs/server/index.js",
+  "module": "dist/esm/server/index.js",
+  "types": "dist/types/server/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/server/index.d.ts",
+      "import": "./dist/esm/server/index.js",
+      "require": "./dist/cjs/server/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run build:cjs && npm run build:esm && npm run build:types",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:types": "tsc -p tsconfig.types.json && node ../../tools/move_ambientdeclaration.js server"
+  },
+  "dependencies": {
+    "injection-js": "^2.4.0",
+    "reflect-metadata": "^0.2.1",
+    "rxjs": "^7.8.1"
+  },
+  "peerDependencies": {
+    "@armoury/fivem-framework-common": "1.0.18",
+    "drizzle-orm": "^0.45.4",
+    "mysql2": "^3.24.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.11"
+  }
+}

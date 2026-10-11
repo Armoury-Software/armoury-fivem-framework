@@ -1,11 +1,19 @@
 const fs = require('fs');
+const path = require('path');
 
-const indexFilePath = './dist/types/index.d.ts';
-const ambientDeclarationPath = './src/ambient.declarations.d.ts';
+const packageName = process.argv[2];
+if (!['client', 'server'].includes(packageName)) {
+	throw new Error('Specify the client or server package.');
+}
 
-const data = fs.readFileSync(indexFilePath, 'utf8').replace('"../../src/ambient.declarations.d.ts"', '"./ambient.declarations.d.ts"');
-fs.writeFileSync(indexFilePath, data);
+const repositoryRoot = path.resolve(__dirname, '..');
+const packageTypesPath = path.join(repositoryRoot, 'packages', packageName, 'dist', 'types');
+const declarationPath = path.join(packageTypesPath, packageName, 'index.d.ts');
+const ambientDeclarationPath = path.join(repositoryRoot, 'src', 'ambient.declarations.d.ts');
+const reference = '/// <reference path="../ambient.declarations.d.ts" />\n';
+const declaration = fs.readFileSync(declarationPath, 'utf8');
 
-fs.writeFileSync('./dist/types/ambient.declarations.d.ts', fs.readFileSync(ambientDeclarationPath, 'utf8'));
+fs.writeFileSync(declarationPath, reference + declaration);
+fs.copyFileSync(ambientDeclarationPath, path.join(packageTypesPath, 'ambient.declarations.d.ts'));
 
-console.log('Successfully included ambient declarations file in the types folder.');
+console.log(`Included ambient declarations in the ${packageName} package.`);

@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "rootDir": "../../src",
+    "outDir": "dist/cjs",
+    "skipLibCheck": true
+  },
+  "include": ["../../src/server/**/*.ts", "../../src/ambient.declarations.d.ts"]
+}

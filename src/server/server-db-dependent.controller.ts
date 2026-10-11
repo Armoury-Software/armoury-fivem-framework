@@ -1,7 +1,6 @@
 // TODO: Remove
 import { ServerController } from "./server.controller";
-import { isJSON } from '../utils/utils';
-import { Controller, EventListener, Export } from "../decorators";
+import { isJSON, Controller, EventListener, Export } from '@armoury/fivem-framework-common';
 
 @Controller()
 export class ServerDBDependentController<T extends { id: number }> extends ServerController {

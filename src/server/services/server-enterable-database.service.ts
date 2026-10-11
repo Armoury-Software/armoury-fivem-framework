@@ -1,6 +1,6 @@
 import { Injectable } from "injection-js";
 import { ServerResourceDatabase } from "./server-resource-database.service";
-import { isPlayerInRangeOfPoint } from "../../utils/utils";
+import { isPlayerInRangeOfPoint } from '@armoury/fivem-framework-common';
 
 @Injectable()
 export class ServerEnterableDatabase<
