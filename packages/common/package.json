@@ -1,6 +1,6 @@
 {
   "name": "@armoury/fivem-framework-common",
-  "version": "1.0.18",
+  "version": "1.0.38",
   "description": "Shared APIs for the Armoury FiveM framework",
   "main": "dist/cjs/common/index.js",
   "module": "dist/esm/common/index.js",

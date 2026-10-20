@@ -1,6 +1,6 @@
 {
   "name": "@armoury/fivem-framework-client",
-  "version": "1.0.18",
+  "version": "1.0.38",
   "description": "Client APIs for the Armoury FiveM framework",
   "main": "dist/cjs/client/index.js",
   "module": "dist/esm/client/index.js",
@@ -25,7 +25,7 @@
     "rxjs": "^7.8.1"
   },
   "peerDependencies": {
-    "@armoury/fivem-framework-common": "1.0.18"
+    "@armoury/fivem-framework-common": "1.0.38"
   },
   "publishConfig": {
     "access": "public"

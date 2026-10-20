@@ -8,8 +8,9 @@ interface ResourceBinding {
 const RESOURCE_PARAMETERS_METADATA = 'arm_resource_parameters';
 
 export type ResourceExportsReader = (resourceName: string) => unknown;
+type ResourceExport = <T = any>(...args: any[]) => any;
 
-export class ResourceRef<T = Record<string, (...args: any[]) => any>> {
+export class ResourceRef<T = Record<string, ResourceExport>> {
     public constructor(
         public readonly resourceName: string,
         private readonly readExports: ResourceExportsReader,
@@ -25,7 +26,7 @@ export class ResourceRef<T = Record<string, (...args: any[]) => any>> {
     }
 }
 
-export function Resource<T = Record<string, (...args: any[]) => any>>(resourceName: string): ParameterDecorator {
+export function Resource<T = Record<string, ResourceExport>>(resourceName: string): ParameterDecorator {
     if (!resourceName.trim()) {
         throw new Error('Resource name must not be empty.');
     }

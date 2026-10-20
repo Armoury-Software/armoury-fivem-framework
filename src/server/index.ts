@@ -4,15 +4,14 @@ import 'reflect-metadata';
 import { BootstrapOptions, bootstrapWithProviders } from '@armoury/fivem-framework-common';
 import { Provider } from 'injection-js';
 
-import { Database } from './database/database';
-import { ServerSessionService } from './services';
+import { PickupService, SessionService } from './services';
 
 export const SERVER_LAZY_PROVIDERS: Provider[] = [
 ];
 
 export const SERVER_EAGER_PROVIDERS: Provider[] = [
-  Database.forChild(),
-  ServerSessionService,
+  SessionService,
+  PickupService,
 ];
 
 export async function bootstrap<
@@ -29,7 +28,6 @@ export async function bootstrap<
   );
 }
 
-export * from './database';
 export * from './services';
 export * from './models';
 export * from '@armoury/fivem-framework-common';

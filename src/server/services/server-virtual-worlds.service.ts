@@ -1,12 +1,12 @@
 import { Inject, Injectable } from 'injection-js';
 import { EventListener } from '@armoury/fivem-framework-common';
 
-import { ServerSessionService } from './session/server-session.service';
+import { SessionService } from './session/session.service';
 
 @Injectable()
 export class ServerVirtualWorldsService {
     public constructor(
-        @Inject(ServerSessionService) private readonly _session: ServerSessionService,
+        @Inject(SessionService) private readonly _session: SessionService,
     ) { }
 
     // Probable performance issue? Maybe calling the export so many times when changing the virtual world is too costly?

@@ -48,17 +48,49 @@ export enum EVENT_DIRECTIONS {
 
 // TODO: Refactor this, so resources can add to it
 export const DEFAULT_EVENTS: { [key: string]: string } = {
-    onAccountAuthenticate: 'authentication:account-success',
+
+    /** Session */
+    onPlayerSessionCreated: 'armoury:session-created',
+    onPlayerSessionUpdated: 'armoury:session-updated',
+    onPlayerSessionDestroyed: 'armoury:session-destroyed',
+
+    /** Accounts */
+    onAccountCreated: 'armoury:account-created',
+    onAccountAuthenticated: 'armoury:account-authenticated',
+
+    /** Connection */
     onPlayerConnect: 'playerJoining',
+    onPlayerDisconnect: 'playerDropped',
+
+    /** Vehicle */
+    onPlayerEnterVehicle: 'armoury:onPlayerEnterVehicle',
+    onPlayerExitVehicle: 'armoury:onPlayerExitVehicle',
+    onPlayerStartTowVehicle: 'armoury:onPlayerStartTowVehicle',
+    onPlayerStopTowVehicle: 'armoury:onPlayerStopTowVehicle',
+
+    /** Zone */
+    onPlayerEnterZone: 'armoury:safe:zone:enter',
+    onPlayerEnterZoneUnsafe: 'armoury:unsafe:zone:enter',
+    onPlayerExitZone: 'armoury:safe:zone:exit',
+    onPlayerExitZoneUnsafe: 'armoury:unsafe:zone:exit',
+
+    /** Pickup */
+    onPickupCollect: 'armoury:safe:pickup:collect',
+    onPickupCollectUnsafe: 'armoury:unsafe:pickup:collect',
+    onPickupLeave: 'armoury:safe:pickup:leave',
+    onPickupLeaveUnsafe: 'armoury:unsafe:pickup:leave',
+
+    /** Native */
+    onResourceStop: 'onResourceStop',
+    onServerResourceStart: 'onServerResourceStart',
+    onServerResourceStop: 'onServerResourceStop',
+
+    /** Other */
+    onAccountAuthenticate: 'authentication:account-success',
     onPlayerDeath: 'armoury:onPlayerDeath',
     onPlayerAuthenticate: 'authentication:player-authenticated',
     onPlayerLogout: 'armoury:player-logout',
-    onPlayerDisconnect: 'playerDropped',
-    onResourceStop: 'onResourceStop',
     onContextMenuItemPressed: 'armoury-overlay:context-menu-item-pressed',
-    onPlayerEnterVehicle: 'armoury:onPlayerEnterVehicle',
-    onPlayerExitVehicle: 'armoury:onPlayerExitVehicle',
     onPlayerClientsidedCacheLoaded: 'armoury:player-resource-cache-loaded',
-    onPlayerStartTowVehicle: 'armoury:onPlayerStartTowVehicle',
-    onPlayerStopTowVehicle: 'armoury:onPlayerStopTowVehicle',
+
 }

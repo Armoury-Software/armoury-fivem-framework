@@ -2,35 +2,40 @@
 
 import 'reflect-metadata';
 import { Provider } from 'injection-js';
-import { ClientActionPointsService, ClientBlipsService, ClientCheckpointsService, ClientMarkersService, ClientPedsService, ClientSessionService, ClientTicksService, ClientUIService, ClientVehiclesService, ClientWaypointsService, ClientTranslateService, ClientHudService } from './services';
+import { ClientActionPointsService, ClientBlipsService, ClientCheckpointsService, ClientMarkersService, ClientPedsService, ClientSessionService, ClientTicksService, ClientUIService, ClientVehiclesService, ClientWaypointsService, ClientTranslateService, ClientHudService, UI } from './services';
 
 import { BootstrapOptions, bootstrapWithProviders, DecorationType } from '@armoury/fivem-framework-common';
 
 export const CLIENT_PROVIDERS = [
-    ClientActionPointsService,
-    ClientBlipsService,
-    ClientCheckpointsService,
-    ClientHudService,
-    ClientMarkersService,
-    ClientPedsService,
-    ClientSessionService,
-    ClientTicksService,
-    ClientVehiclesService,
-    ClientUIService,
-    ClientWaypointsService,
+  ClientActionPointsService,
+  ClientBlipsService,
+  ClientCheckpointsService,
+  ClientHudService,
+  ClientMarkersService,
+  ClientPedsService,
+  ClientSessionService,
+  ClientTicksService,
+  ClientVehiclesService,
+  ClientUIService,
+  ClientWaypointsService,
+];
+
+export const CLIENT_EAGER_PROVIDERS = [
+  UI
 ];
 
 export async function bootstrap<
-    T extends { new(...args: any[]): any } & Provider
+  T extends { new(...args: any[]): any } & Provider
 >(_class: T, options: BootstrapOptions = {}): Promise<InstanceType<T>> {
-    return bootstrapWithProviders(
-        _class,
-        CLIENT_PROVIDERS,
-        options,
-        DecorationType.CLIENT,
-        (key, index) => Cfx.Client.GetResourceMetadata(Cfx.Client.GetCurrentResourceName(), key, index),
-		(resourceName) => Cfx.exports[resourceName],
-    );
+  return bootstrapWithProviders(
+    _class,
+    CLIENT_PROVIDERS,
+    options,
+    DecorationType.CLIENT,
+    (key, index) => Cfx.Client.GetResourceMetadata(Cfx.Client.GetCurrentResourceName(), key, index),
+    (resourceName) => Cfx.exports[resourceName],
+    CLIENT_EAGER_PROVIDERS
+  );
 }
 
 export * from './services';

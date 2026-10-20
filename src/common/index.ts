@@ -123,7 +123,19 @@ export async function bootstrapWithProviders<
 	const instance = injector.get(entryPoint) as InstanceType<T>;
 
 	Decorate(instance, entryPoint.prototype, [...parentProviders, ...providers], decorationType);
-	eagerTokens.forEach((token) => injector.get(token));
+	const decoratedInstances = new Set<object>([instance as object]);
+	for (const token of eagerTokens) {
+		const eagerInstance = injector.get(token);
+		if (typeof eagerInstance !== 'object' || eagerInstance === null || decoratedInstances.has(eagerInstance)) {
+			continue;
+		}
+
+		const prototype = Object.getPrototypeOf(eagerInstance);
+		if (prototype && prototype !== Object.prototype) {
+			Decorate(eagerInstance, prototype, [...parentProviders, ...providers], decorationType);
+			decoratedInstances.add(eagerInstance);
+		}
+	}
 
 	const initializers = injector.get(APP_INITIALIZER, []);
 	await Promise.all(initializers.map((initializer) => initializer()));

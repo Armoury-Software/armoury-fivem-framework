@@ -1,6 +1,6 @@
 {
   "name": "@armoury/fivem-framework-server",
-  "version": "1.0.18",
+  "version": "1.0.38",
   "description": "Server APIs for the Armoury FiveM framework",
   "main": "dist/cjs/server/index.js",
   "module": "dist/esm/server/index.js",
@@ -27,14 +27,9 @@
     "rxjs": "^7.8.1"
   },
   "peerDependencies": {
-    "@armoury/fivem-framework-common": "1.0.18",
-    "drizzle-orm": "^0.45.4",
-    "mysql2": "^3.24.5"
+    "@armoury/fivem-framework-common": "1.0.38"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "devDependencies": {
-    "drizzle-kit": "^0.31.11"
   }
 }

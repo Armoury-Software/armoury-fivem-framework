@@ -5,6 +5,8 @@ import { Exports } from "./export.decorator";
 import { KeyBindings } from "./key-binding.decorator";
 import { UIListeners } from "./ui-listener.decorator";
 
+const decoratedTargets = new WeakSet<object>();
+
 export class DecoratorUtils {
     public static map(target: any, _prototype: any, providers: Object[]) {
         return [
@@ -27,11 +29,20 @@ export class DecoratorUtils {
 export function Decorate<
     T extends { new(...args: any[]): any } & Provider
 >(instance: T, _prototype: any, providers: Provider[], decorationType: DecorationType = DecorationType.SERVER) {
+    if (decoratedTargets.has(instance)) {
+        return;
+    }
+
     const relevantProvidersForClass = Object.values(instance)
         .filter((provider) =>
             typeof provider === 'object'
+            && provider !== null
+            && !decoratedTargets.has(provider)
             && Reflect.getMetadataKeys(provider).some((key) => key.startsWith('arm_'))
         );
+
+    decoratedTargets.add(instance);
+    relevantProvidersForClass.forEach((provider) => decoratedTargets.add(provider));
 
     Commands(instance, _prototype, relevantProvidersForClass);
     EventListeners(instance, _prototype, relevantProvidersForClass);

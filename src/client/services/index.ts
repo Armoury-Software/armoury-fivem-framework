@@ -10,3 +10,4 @@ export * from './client-translate.service';
 export * from './client-vehicles.service';
 export * from './client-ui.service';
 export * from './client-waypoints.service';
+export * from './ui';
