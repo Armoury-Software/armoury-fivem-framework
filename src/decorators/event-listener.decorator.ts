@@ -49,6 +49,10 @@ export enum EVENT_DIRECTIONS {
 // TODO: Refactor this, so resources can add to it
 export const DEFAULT_EVENTS: { [key: string]: string } = {
 
+    /** Blips */
+    onBlipCreate: 'armoury:safe:blip:created',
+    onBlipCreateUnsafe: 'armoury:unsafe:blip:created',
+
     /** Session */
     onPlayerSessionCreated: 'armoury:session-created',
     onPlayerSessionUpdated: 'armoury:session-updated',

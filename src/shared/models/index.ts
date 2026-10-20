@@ -1,5 +1,5 @@
-export * from './account';
-export * from './character';
+/** Stub */
+export * from './stub';
 
 /** Session */
 export * from './session';

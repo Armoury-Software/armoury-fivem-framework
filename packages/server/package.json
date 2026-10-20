@@ -1,6 +1,6 @@
 {
   "name": "@armoury/fivem-framework-server",
-  "version": "1.0.38",
+  "version": "1.0.43",
   "description": "Server APIs for the Armoury FiveM framework",
   "main": "dist/cjs/server/index.js",
   "module": "dist/esm/server/index.js",
@@ -27,7 +27,7 @@
     "rxjs": "^7.8.1"
   },
   "peerDependencies": {
-    "@armoury/fivem-framework-common": "1.0.38"
+    "@armoury/fivem-framework-common": "1.0.43"
   },
   "publishConfig": {
     "access": "public"

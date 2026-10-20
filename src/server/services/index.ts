@@ -1,3 +1,6 @@
+/** Blips */
+export * from './blips/blip.service';
+
 /** Session */
 export * from './session/session.service';
 
